@@ -1,0 +1,161 @@
+<style type="text/css">
+    body {
+        /* background-color: #0A4797; */
+        background-image: url("/static/img/bg.jpg");
+        background-size: 100% 100%;
+    }
+
+    footer{
+        margin-top: 500px;
+        color: #ffffff;
+    }
+
+    img {
+        position: absolute;
+        left: 25%;
+        top: 50%;
+        animation-name: fade-in;
+        animation-duration: 3s;
+    }
+
+    @keyframes go {
+        from {
+            background-color: white;
+            opacity: 0;
+        }
+
+        to {
+            background-color: white;
+            opacity: 1;
+        }
+    }
+
+    @keyframes fade-in {
+        from {
+            left: 20%;
+            top: 45%;
+            opacity: 0;
+        }
+
+        to {
+            left: 25%;
+            top: 50%;
+            opacity: 1;
+        }
+    }
+
+    .env {
+        position: absolute;
+        width: 350px;
+        height: 250px;
+        left: 24%;
+        top: 48%;
+
+        border-style: outset;
+        border-color: red;
+        animation-name: oxxo;
+        animation-duration: 3s;
+    }
+
+    .green {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        left: 39%;
+        top: 73%;
+
+        border-style: solid;
+        border-width: 3px;
+        border-color: green;
+        animation-name: g2;
+        animation-duration: 3s;
+    }
+
+    @keyframes oxxo {
+
+        0% {
+            left: 7%;
+            top: 10%;
+            width: 150px;
+            height: 150px;
+        }
+
+        25% {
+            left: 81%;
+            top: 59%;
+            width: 150px;
+            height: 150px;
+        }
+
+        50% {
+            left: 32%;
+            top: 63%;
+            width: 150px;
+            height: 150px;
+        }
+
+        75% {
+            left: 86%;
+            top: 75%;
+            width: 150px;
+            height: 150px;
+        }
+
+        100% {
+            left: 24%;
+            top: 48%;
+            width: 350px;
+            height: 250px;
+        }
+    }
+
+    @keyframes g2 {
+
+        0% {
+            left: 72%;
+            top: 10%;
+
+        }
+
+        25% {
+            left: 28%;
+            top: 84%;
+
+        }
+
+        50% {
+            left: 85%;
+            top: 80%;
+
+        }
+
+        75% {
+            left: 13%;
+            top: 54%;
+
+        }
+
+        100% {
+            left: 39%;
+            top: 73%;
+
+
+        }
+    }
+</style>
+
+{% extends "base.html" %}
+{% block title %}網頁標題{% endblock %}
+{% block headmessage %}<h2></h2>{% endblock %}
+{% block content %}
+
+<div class="text-center">
+    <h1>Number 7-拖船標誌辨識</h1>
+    <p> 一句話介紹專案在幹嘛的</p>
+    <a class="btn btn-lg btn-filled " href="#" style="border: solid 1px ;">前往下一頁</a>
+</div>
+
+<img src="static/img/shipPNG-324-2.png" alt="">
+<div class="env"></div>
+<div class="green"></div>
+{% endblock %}
