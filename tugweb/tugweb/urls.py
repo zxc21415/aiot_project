@@ -17,7 +17,12 @@ from django.contrib import admin
 from django.urls import path
 from mysite import views
 
+
 urlpatterns = [
+    #告訴她沒有跟數字的也可以接收
+    path('chart/', views.chart),
+    #圖表
+    path('chart/<int:id>/', views.chart),
     path('admin/', admin.site.urls),
     path('', views.index),
 ]

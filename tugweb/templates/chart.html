@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}圖表{% endblock %}
+{% block headmessage %}<h2></h2>{% endblock %}
+{% block content %}
+
+<!-- 畫圖 -->
+
+<div class="row">
+    <form>
+        請勾選您想購買的項目<br>
+        <input type="checkbox" value="1" name="Product" id="Product_1"> Red 12 &nbsp;&nbsp;
+        <input type="checkbox" value="2" name="Product" id="Product_2"> Blue 19 &nbsp;&nbsp;
+        <input type="checkbox" value="3" name="Product" id="Product_3"> Yellow 3 &nbsp;&nbsp;
+        <input type="checkbox" value="4" name="Product" id="Product_4"> Green 5 &nbsp;&nbsp;
+        <input type="checkbox" value="5" name="Product" id="Product_5"> Purple 2 &nbsp;&nbsp;
+        <input type="checkbox" value="6" name="Product" id="Product_6"> Orange 3 &nbsp;&nbsp;
+    </form>
+</div>
+
+<canvas id="myChart" width="400" height="150"></canvas>
+<script>
+    var a = document.getElementsByName("Product");
+    T_label_list = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+    T_data_list = [12, 19, 3, 5, 2, 3]
+    T_color_list = ['rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)']
+    T_borderColor_list = ['rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)']
+    new_label_list = [];
+    new_data_list = [];
+    new_color_list = [];
+    new_borderColor_list = [];
+    
+    function addData(chart, new_label, data, new_color, new_borderColor) {
+        for (var i = 0; i < new_label.length; i++) {
+            chart.data.labels = new_label;
+            chart.data.datasets[i].data = data;
+            chart.data.datasets[i].backgroundColor = new_color;
+            chart.data.datasets[i].borderColor = new_borderColor;
+            chart.update();
+        }
+
+    }
+
+    
+    $(document).ready(function () {
+
+        $(a).click(function (event) {
+            new_label_list = [];
+            new_data_list = [];
+            new_color_list = [];
+            new_borderColor_list = [];
+            for (var i = 0; i < T_label_list.length; i++) {
+                if (a[i].checked == true) {
+                    new_label_list.push(T_label_list[i]);
+                    new_data_list.push(T_data_list[i]);
+                    new_color_list.push(T_color_list[i]);
+                    new_borderColor_list.push(T_borderColor_list[i]);
+                }
+            }
+            
+            addData(myChart, new_label_list, new_data_list,new_color_list,new_borderColor_list)
+
+        });
+
+
+
+    });
+
+
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+
+            labels: new_label_list,
+            datasets: [{
+                label: '# of Votes',
+                data: new_data_list,
+                backgroundColor: new_color_list,
+                borderColor: new_borderColor_list,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+{% endblock %}
