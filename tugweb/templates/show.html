@@ -14,7 +14,7 @@
         background-size: contain;
         border: 1px dashed #333333;
         border-radius: 10px;
-        background-image: url("/static/img/click_upload.png");
+        /* background-image: url("/static/img/click_upload.png"); */
     }
 
     .btn-upload {
@@ -28,7 +28,7 @@
         border-radius: 10px;
     }
 
-    /* .fimg1 {
+    .fimg1 {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -37,22 +37,23 @@
         overflow: hidden;
         clip: rect(0, 0, 0, 0);
         border: 0;
-    } */
+    }
 
     .btn-block {
         display: block;
         /* width: 100%; */
     }
 
-    .btn:hover {
+    .btn-upload:hover {
         background-color: #2e2e2e;
         color: #fff;
     }
 
-    .btn:focus {
+    .btn-upload:focus {
         background-color: #2e2e2e;
         color: #fff;
     }
+    
 </style>
 
 
@@ -60,48 +61,27 @@
 <div class="row">
     <div class="col-sm-9">
         <div id="uploadedImage"></div>
-        <!-- <div class="mt-4"> -->
+        
         <h2>系統展示</h2>
         <p style="margin-top:5px ;">請選擇想辨識的檔案</p>
 
         <form action="" enctype="multipart/form-data" id="imageUploadForm" method="post">
-            <!-- <input type="file" id="file">
-                <button class="btn btn-outline-success" type="submit">Submit</button> -->
+           
             <div style="margin: 0 auto;">
                 <div class="uploadPreview" id="faceRectDiv">
-
+                    <img src="/static/img/click_upload.png" id="show" width="340" height="290" style="margin-left: 4px;margin-top: 4px;">
                 </div>
-                <div class="text-center">
+                <div class="text-center" style="margin-top: 5px;">
                     <button type="button" class="btn btn-upload btn-block" onclick="uploadImgA()"
                         style="max-width: 350px;">上傳圖片</button>
                     <input class="fimg1" id="img1" type="file" accept="image/png,image/gif,image/jpeg" name="img1"
                         title="">
+                    
                     <label for="img1" id="labelImg1"></label>
                 </div>
-                <div class="alert alert-primary" id="divFileErr" style="display: none;">
-                </div>
-                <div class="alert alert-primary" id="divResult" style="display: none;">
-                    <h4 class="alert-heading">辨識結果</h4>
-                    <span class="h4 face8blue" id="resultMsg"></span>
-                    <div class="div-ulResults" id="divUlResults" style="display: none;">
-                        <ul class="ul-results pl-0" id="ul_results">
-                            <li class="name m-1">
-                                <span>
-                                    <div class="square"></div>
-                                </span>
-                                <span></span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="form-inline" id="divInput" style="display: none;">
-                        <div class="form-group">
-                        </div>
-                    </div>
-                </div>
-                <div id="processing" class="loader" style="display: none;"></div>
+                <button class="btn btn-outline-success" type="submit">Submit</button>
             </div>
         </form>
-        <!-- </div> -->
     </div>
     <div class="mt-4">
 
@@ -246,64 +226,20 @@
     // 上傳圖片
     function uploadImgA() {
         $("#img1").trigger("click");
-        console.log(123)
+        
     }
 
     function loadImgOnLable(e) {
-        console.log(456)
-        // var reader = new FileReader();
-        // console.log(reader)
-        // reader.onload = function (e) {
-
-        //     //$("#preview_progressbarTW_img").attr('src', e.target.result);
-
-        //     console.log(123+e.target.result)
-
-        // }
-        // var faceRectDiv = $('#faceRectDiv')
-        // inputID = e.currentTarget.id
-        // console.log(e.currentTarget)
-        // var width = faceRectDiv[0].clientWidth
-
-
-        // console.log(e.preventDefault())
-        var img1 = $('#img1')
-        var selectedFile = $('#img1').get(0).files[0];
-        //var selectedFile = document.getElementById('img1').files[0];
-        //const [file] =  img1.files
-        console.log(selectedFile)
-        handleFiles(selectedFile)
-        // if (file) {
-        //     blah.src = URL.createObjectURL(file)
-        // }
-
-    }
-
-    function handleFiles(files) {
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var imageType = /image.*/;
-
-            if (!file.type.match(imageType)) {
-                continue;
-            }
-
-            var img = document.createElement("img");
-            img.classList.add("obj");
-            img.file = file;
-            preview.appendChild(img);
-
-            var reader = new FileReader();
-            reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
-            reader.readAsDataURL(file);
+        var readFile = new FileReader();
+        var mfile = $("#img1")[0].files[0];  //注意這裡必須時$("#myfile")[0]，document.getElementById('file')等價與$("#myfile")[0]
+        readFile.readAsDataURL(mfile);
+        readFile.onload = function () {
+            var img = $("#show");
+            img.attr("src", this.result);
+            a=this.result.toString();
+            $("#faceRectDiv").css("background-image", "url(a)");
         }
     }
-
-
-
-
-
-
 </script>
 
 {% endblock %}
