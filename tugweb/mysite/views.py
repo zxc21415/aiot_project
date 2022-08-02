@@ -12,3 +12,7 @@ def chart(request):
 def introduce(request):
     url = 'introduce'
     return render(request,"introduce.html",locals())
+
+def show(request):
+    url = 'show'
+    return render(request,"show.html",locals())

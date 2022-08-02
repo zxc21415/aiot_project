@@ -19,6 +19,7 @@ from mysite import views
 
 
 urlpatterns = [
+    path('show/', views.show),
     path('introduce/', views.introduce),
     #告訴她沒有跟數字的也可以接收
     path('chart/', views.chart),

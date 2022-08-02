@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+{% block title %}專題簡介{% endblock %}
+{% block headmessage %}<h2></h2>{% endblock %}
+{% block content %}
+
+<style type="text/css">
+    .uploadPreview {
+        position: relative;
+        width: 350px;
+        height: 300px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: 1px dashed #333333;
+        border-radius: 10px;
+        background-image: url("/static/img/click_upload.png");
+    }
+
+    .btn-upload {
+        width: 350px;
+        height: 42px;
+        font-size: 22px;
+        line-height: unset;
+        border: none;
+        background-color: #2e2e2e;
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    .fimg1 {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+
+    .btn-block {
+        display: block;
+        /* width: 100%; */
+    }
+
+    .btn:hover {
+        background-color: #2e2e2e;
+        color: #fff;
+    }
+
+    .btn:focus {
+        background-color: #2e2e2e;
+        color: #fff;
+    }
+</style>
+
+
+
+<div class="row">
+    <div class="col-sm-9">
+        <div id="uploadedImage"></div>
+        <!-- <div class="mt-4"> -->
+        <h2>系統展示</h2>
+        <p style="margin-top:5px ;">請選擇想辨識的檔案</p>
+
+        <form action="" enctype="multipart/form-data" id="imageUploadForm" method="post">
+            <!-- <input type="file" id="file">
+                <button class="btn btn-outline-success" type="submit">Submit</button> -->
+            <div style="margin: 0 auto;">
+                <div class="uploadPreview" id="faceRectDiv">
+                    
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-upload btn-block" onclick="uploadImgA()"
+                        style="max-width: 350px;">上傳圖片</button>
+                    <input class="fimg1" id="img1" type="file" accept="image/png,image/gif,image/jpeg" name="img1"
+                        title="">
+                    <label for="img1" id="labelImg1"></label>
+                </div>
+                <div class="alert alert-primary" id="divFileErr" style="display: none;">
+                </div>
+                <div class="alert alert-primary" id="divResult" style="display: none;">
+                    <h4 class="alert-heading">辨識結果</h4>
+                    <span class="h4 face8blue" id="resultMsg"></span>
+                    <div class="div-ulResults" id="divUlResults" style="display: none;">
+                        <ul class="ul-results pl-0" id="ul_results">
+                            <li class="name m-1">
+                                <span>
+                                    <div class="square"></div>
+                                </span>
+                                <span></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-inline" id="divInput" style="display: none;">
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </div>
+                <div id="processing" class="loader" style="display: none;"></div>
+            </div>
+        </form>
+        <!-- </div> -->
+    </div>
+    <div class="mt-4">
+
+    </div>
+</div>
+
+
+<!-- <script>
+    var filesizeLimit = 12 * 1024 * 1024
+    var resultObj = null
+    var inputID
+    var filesizeLimit = 12 * 1024 * 1024
+
+    $(document).ready(function () {
+        $('#img1').on('change', loadImgOnLable)
+        //getBrowserWidth()
+    });
+
+    // 上傳圖片
+    function uploadImgA() {
+        $("#img1").trigger("click");
+    }
+
+    function checkOnCancel() {
+        var fileNameStatA = $("#img1").get(0).files.length
+        // divResult 已隱藏
+        //var divResult = document.getElementById('divResult');
+        if (fileNameStatA == 0) {
+            //$('#fileNameA').text("")
+            $("#faceRectDiv").css({
+                'background-image': 'url("/static/images/faceMaster/click_upload.png")',
+                'width': '350px',
+                'height': '350px'
+            });
+            //divResult.style.display = "none";
+        }
+    }
+
+
+    function loadImgOnLable(e) {
+        $('#faceRectDiv').empty()
+        //var divResult = document.getElementById('divResult');
+        //divResult.style.display = "none";
+        resultObj = null
+        //$('#divResult').hide()
+        var faceRectDiv = $('#faceRectDiv')
+        inputID = e.currentTarget.id
+
+        var width = faceRectDiv[0].clientWidth
+
+        e.preventDefault()
+        e = e.originalEvent
+        var target = e.dataTransfer || e.target
+        var file = target && target.files && target.files[0]
+
+        var options = {
+            maxWidth: width,
+            canvas: true,
+            pixelRatio: window.devicePixelRatio,
+            downsamplingRatio: 0.5,
+            orientation: false
+        }
+
+        //check()
+        if (!file) {
+            checkOnCancel()
+            return
+        }
+
+        else if (file.size > filesizeLimit) {
+            var spanMsg = "<span id='fileErrMsg'></span>"
+            var msg = "您所選擇的檔案大小為 " + Math.floor(file.size / 1024) + "kb" + "已超過上傳上限 " + filesizeLimit / 1024 + "kb";
+            $("#divFileErr").append(spanMsg)
+            $("#fileErrMsg").text(msg)
+            $('#divFileErr').show()
+            return
+        }
+
+        //displayImage(file, options)
+        currentFile = file
+        //FaceMasterSearch()
+        // if (!loadImage(file, updateResults, options)) {
+        //     $('#divFileErr').text('上傳圖片失敗，請重新上傳')
+        // }
+
+    }
+
+
+    function updateResults(img, data) {
+        var fileName = currentFile.name
+        var href = img.src
+        var dataURLStart
+
+        if (!(img.src || img instanceof HTMLCanvasElement)) {
+            $('#divFileErr').text('上傳圖片失敗，請重新上傳')
+        }
+        else {
+            if (!href) {
+                href = img.toDataURL(currentFile.type + 'REMOVEME')
+                // Check if file type is supported for the dataURL export:
+                dataURLStart = 'data:' + currentFile.type
+                /*
+                if (href.slice(0, dataURLStart.length) !== dataURLStart) {
+                  fileName = fileName
+                }
+                */
+            }
+
+            if (inputID == "img1") {
+                //$('#file1Info').show()
+                //$('#fileNameA').text(fileName)
+            }
+
+        }
+        $('#divFileErr').hide()
+        $("#faceRectDiv").css("background-image", "url(" + href + ")");
+    }
+
+    // browser width change
+    function getBrowserWidth() {
+        window.addEventListener('resize', function () {
+            doneResizing()
+        });
+    }
+
+
+    function doneResizing() {
+        if (resultObj != null) {
+            updateFaceRect(resultObj)
+        }
+    }
+</script> -->
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#img1').on('change', loadImgOnLable)
+        //getBrowserWidth()
+    });
+
+    // 上傳圖片
+    function uploadImgA() {
+        $("#img1").trigger("click");
+    }
+    
+
+
+
+    
+
+        
+
+</script>
+
+{% endblock %}
