@@ -1,7 +1,14 @@
 <style type="text/css">
+    /* font{
+        color: white !important;
+    }
+    .nav-link{
+        color: white !important;
+    } */
     .nav-pills .nav-link.active {
         color: white;
-        background-color: #5d6064
+        /* background-color: #18B7B1; */
+        background-color: #5d6064;
     }
 
     .nav {
@@ -30,14 +37,24 @@
                         <font style="vertical-align: inherit;">首頁</font>
                     </font>
                 </a></li>
-            <li class="nav-item"><a href="#" class="nav-link">
+                <li class="nav-item"><a href="/introduce/" class="nav-link {% if url == 'introduce' %}active{% endif %}">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">專題背景</font>
+                    </font>
+                </a></li>
+            <li class="nav-item"><a href="#" class="nav-link {% if url == 'tag' %}active{% endif %}">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">船舷標誌介紹</font>
+                    </font>
+                </a></li>
+                <li class="nav-item"><a href="/chart/" class="nav-link {% if url == 'chart' %}active{% endif %}">
                     <font style="vertical-align: inherit;">
                         <font style="vertical-align: inherit;">圖表</font>
                     </font>
                 </a></li>
-            <li class="nav-item"><a href="/data/" class="nav-link {% if url == 'lotto' %}active{% endif %}">
+            <li class="nav-item"><a href="/data/" class="nav-link {% if url == 'data' %}active{% endif %}">
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">資料</font>
+                        <font style="vertical-align: inherit;">模型展示</font>
                     </font>
                 </a></li>
             <!-- <li class="nav-item"><a href="https://www.nkust.edu.tw/" class="nav-link">
