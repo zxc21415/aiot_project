@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'tugweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'mynews',
+        'NAME':'mytug',
         'USER':'root',
         'PASSWORD':'12345678',
         'HOST':'127.0.0.1',

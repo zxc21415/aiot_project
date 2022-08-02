@@ -28,7 +28,7 @@
         border-radius: 10px;
     }
 
-    .fimg1 {
+    /* .fimg1 {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -37,7 +37,7 @@
         overflow: hidden;
         clip: rect(0, 0, 0, 0);
         border: 0;
-    }
+    } */
 
     .btn-block {
         display: block;
@@ -69,7 +69,7 @@
                 <button class="btn btn-outline-success" type="submit">Submit</button> -->
             <div style="margin: 0 auto;">
                 <div class="uploadPreview" id="faceRectDiv">
-                    
+
                 </div>
                 <div class="text-center">
                     <button type="button" class="btn btn-upload btn-block" onclick="uploadImgA()"
@@ -240,20 +240,69 @@
 <script>
     $(document).ready(function () {
         $('#img1').on('change', loadImgOnLable)
-        //getBrowserWidth()
+
     });
 
     // 上傳圖片
     function uploadImgA() {
         $("#img1").trigger("click");
+        console.log(123)
     }
-    
+
+    function loadImgOnLable(e) {
+        console.log(456)
+        // var reader = new FileReader();
+        // console.log(reader)
+        // reader.onload = function (e) {
+
+        //     //$("#preview_progressbarTW_img").attr('src', e.target.result);
+
+        //     console.log(123+e.target.result)
+
+        // }
+        // var faceRectDiv = $('#faceRectDiv')
+        // inputID = e.currentTarget.id
+        // console.log(e.currentTarget)
+        // var width = faceRectDiv[0].clientWidth
+
+
+        // console.log(e.preventDefault())
+        var img1 = $('#img1')
+        var selectedFile = $('#img1').get(0).files[0];
+        //var selectedFile = document.getElementById('img1').files[0];
+        //const [file] =  img1.files
+        console.log(selectedFile)
+        handleFiles(selectedFile)
+        // if (file) {
+        //     blah.src = URL.createObjectURL(file)
+        // }
+
+    }
+
+    function handleFiles(files) {
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            preview.appendChild(img);
+
+            var reader = new FileReader();
+            reader.onload = (function (aImg) { return function (e) { aImg.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file);
+        }
+    }
 
 
 
-    
 
-        
+
 
 </script>
 
