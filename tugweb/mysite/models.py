@@ -1,3 +1,5 @@
+import os
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 """
@@ -43,3 +45,17 @@ class Loss(models.Model):
                                                      self.obj_train_loss,self.obj_value_loss,       #2
                                                      self.cls_train_loss,self.cls_value_loss,       #2
                                                      self.box_value_loss,self.box_value_loss,)      #2
+
+
+
+
+
+class ImageModel(models.Model):
+    image = models.ImageField(_("image"), upload_to='images')
+
+    class Meta:
+        verbose_name = "Image"
+        verbose_name_plural = "Images"
+
+    def __str__(self):
+        return str(os.path.split(self.image.path)[-1])

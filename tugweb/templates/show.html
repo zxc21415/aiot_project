@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}專題簡介{% endblock %}
 {% block headmessage %}<h2></h2>{% endblock %}
 {% block content %}
@@ -53,39 +54,49 @@
         background-color: #2e2e2e;
         color: #fff;
     }
-    
 </style>
 
 
 
 <div class="row">
-    <div class="col-sm-9">
-        <div id="uploadedImage"></div>
-        
-        <h2>系統展示</h2>
+    <div class="alert alert-primary" role="alert" style="font-size: 28px ;text-align: center;">
+        <b>系統展示</b>
+    </div>
+    <div class="col-sm-9 col-lg-6">
+
+
+
         <p style="margin-top:5px ;">請選擇想辨識的檔案</p>
 
         <form action="" enctype="multipart/form-data" id="imageUploadForm" method="post">
-           
+
             <div style="margin: 0 auto;">
                 <div class="uploadPreview" id="faceRectDiv">
-                    <img src="/static/img/click_upload.png" id="show" width="340" height="290" style="margin-left: 4px;margin-top: 4px;">
+                    <img src="/static/img/click_upload.png" id="show" width="340" height="290"
+                        style="margin-left: 4px;margin-top: 4px;">
                 </div>
                 <div class="text-center" style="margin-top: 5px;">
                     <button type="button" class="btn btn-upload btn-block" onclick="uploadImgA()"
                         style="max-width: 350px;">上傳圖片</button>
                     <input class="fimg1" id="img1" type="file" accept="image/png,image/gif,image/jpeg" name="img1"
                         title="">
-                    
+
                     <label for="img1" id="labelImg1"></label>
                 </div>
+                {% csrf_token %}
+                {{ form|crispy }}
                 <button class="btn btn-outline-success" type="submit">Submit</button>
             </div>
         </form>
     </div>
-    <div class="mt-4">
-
+    <div>
+        {% if inference_img %}
+        <img src="{{inference_img}}" class="img-fluid" />
+        {% else %}
+        The inferenced image will be displayed here.
+        {% endif %}
     </div>
+
 </div>
 
 
@@ -226,7 +237,7 @@
     // 上傳圖片
     function uploadImgA() {
         $("#img1").trigger("click");
-        
+
     }
 
     function loadImgOnLable(e) {
@@ -236,7 +247,7 @@
         readFile.onload = function () {
             var img = $("#show");
             img.attr("src", this.result);
-            a=this.result.toString();
+            a = this.result.toString();
             $("#faceRectDiv").css("background-image", "url(a)");
         }
     }
