@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}船舷標誌介紹{% endblock %}
+{% block headmessage %}<h2></h2>{% endblock %}
+{% block content %}
+
+
+<style type="text/css">
+    .accordion-button:not(.collapsed)  {
+        background-color: #2D6095;
+        color: white;
+    }
+    .accordion-body {
+        background-color: #f6f6f6;
+    }
+    
+</style>
+<div class="row" style="margin-top:3%;">
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <b>Tug mark(拖船標誌)</b>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              為船舶兩舷側之標誌，用來表明拖船之推動之位置，在此位置的鋼板會比船殼的厚，以防止拖船退推壞船殼。
+              <div class="row" style="margin-top:3%;">
+                {% for i in tug_list %}
+                <div class="col-2 text-center">
+                    <img src="/static/img/tugmark/{{i}}.png" class="img-fluid" width="150" height="150">
+                </div>
+                {% endfor %}
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <b>Bow mark(球型艏標誌)</b>
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                為球型艏船舶的一種特有標誌，主要用以表明在其設計水線以下艏部前端有球鼻型突出體，並勘劃於船艏左右兩舷重載水線以上的艏部(bow)處。
+                <div class="row" style="margin-top:3%;">
+                  {% for i in bow_list %}
+                  <div class="col-2 text-center" style="padding-left: 10% ;">
+                      <img src="/static/img/bowmark/{{i}}.png"  width="150" height="150">
+                  </div>
+                  {% endfor %}
+  
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <b>Thruster mark(推進器標誌)</b>
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                為船艏推進器的標誌，在壓載艙 (BT) 和尖艙 (FP) 之間，即船的最前端。對於拖船操作員來說，了解船首推進器的位置很重要，因為船艏推進器作動時會產生湍流，以致於降低拖船的穩度。
+                <div class="row" style="margin-top:3%;">
+                  {% for i in thruster_list %}
+                  <div class="col-2 text-center">
+                      <img src="/static/img/thrustermark/{{i}}.png" class="img-fluid" width="150" height="150">
+                  </div>
+                  {% endfor %}
+  
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                <b>Vessel(船舶)</b>
+              </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                為船舶影像辨識中，首要辨識的目標，以先靠近船為優先，再對船舶標誌進行辨識。
+                <div class="row" style="margin-top:3%;">
+                  {% for i in vessel_list %}
+                  <div class="col-4 text-center">
+                      <img src="/static/img/vessel/{{i}}.jpg" >
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+</div>
+
+
+
+{% endblock %}

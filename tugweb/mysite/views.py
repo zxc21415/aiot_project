@@ -28,6 +28,26 @@ def show(request):
     url = 'show'
     return render(request,"show.html",locals())
 
+def ship_sign(request):
+    url = 'ship_sign'
+    tug_list=list() #6
+    bow_list=list() #5
+    thruster_list=list() #6
+    vessel_list=list() #3
+    for i in range(1,7):
+        temp = "tug0"+str(i)
+        temp2 = "thruster0"+str(i)
+        tug_list.append(temp)
+        thruster_list.append(temp2)
+    for i in range(1,6):
+        temp = "bow0"+str(i)
+        bow_list.append(temp)
+    for i in range(1,4):
+        temp = "vessel0"+str(i)
+        vessel_list.append(temp)
+        
+    return render(request,"ship_sign.html",locals())
+
 
 
 
