@@ -26,20 +26,63 @@ def introduce(request):
 
 def show(request):
     url = 'show'
-    imagemodels = ImageModel.objects.all()
+    # imagemodels = ImageModel.objects.all()
     
-    form = ImageUploadForm()
-    if request.method == "POST":
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/show')
+    # form = ImageUploadForm()
+    # if request.method == "POST":
+    #     form = ImageUploadForm(request.POST, request.FILES)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('/show')
+    # context = {
+    #     'image': imagemodels,
+    #     'form': form
+    # }
+    model = ImageModel
+    template_name = 'show.html'
+    fields = ["image"]
+    form = ImageUploadForm(request.POST, request.FILES)
+    if form.is_valid():
+        img = request.FILES.get('image')
+        img_instance = ImageModel(
+            image=img
+        )
+        img_instance.save()
+
+        uploaded_img_qs = ImageModel.objects.filter().last()
+        img_bytes = uploaded_img_qs.image.read()
+        img = im.open(io.BytesIO(img_bytes))
+
+        # Change this to the correct path
+        path_hubconfig = "C:/aiot_project/tugweb/yolov5_code"
+        path_weightfile = "C:/aiot_project/tugweb/yolov5s.pt"  # or any custom trained model
+
+        model = torch.hub.load(path_hubconfig, 'custom',
+                            path=path_weightfile, source='local')
+
+        results = model(img, size=640)
+        results.render()
+        for img in results.imgs:
+            img_base64 = im.fromarray(img)
+            img_base64.save("static/media/yolo_out/image0.jpg", format="JPEG")
+
+        inference_img = "/media/yolo_out/image0.jpg"
+
+        form = ImageUploadForm()
+        context = {
+            "form": form,
+            "inference_img": inference_img
+        }
+        return render(request, 'show.html', context)
+
+    else:
+        form = ImageUploadForm()
     context = {
-        'image': imagemodels,
-        'form': form
+        "form": form
     }
+    return render(request, 'show.html', context)
     
-    return render(request,"show.html",locals())
+    #return render(request,"show.html",locals())
 
 def ship_sign(request):
     url = 'ship_sign'
@@ -85,7 +128,7 @@ class UploadImage(CreateView):
 
             # Change this to the correct path
             path_hubconfig = "C:/aiot_project/tugweb/yolov5_code"
-            path_weightfile = "C:/aiot_project/tugweb/yolov5s.pt"  # or any custom trained model
+            path_weightfile = "C:/aiot_project/tugweb/absolute/path/to/best.pt"  # or any custom trained model
 
             model = torch.hub.load(path_hubconfig, 'custom',
                                path=path_weightfile, source='local')

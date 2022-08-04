@@ -28,7 +28,7 @@
         border-radius: 10px;
     }
 
-    .fimg1 {
+    #id_image {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -62,9 +62,6 @@
         <b>系統展示</b>
     </div>
     <div class="col-sm-9 col-lg-6">
-
-
-
         <p style="margin-top:5px ;">請選擇想辨識的檔案</p>
 
         <form action="" enctype="multipart/form-data" method="POST" id="imageUploadForm">
@@ -77,179 +74,45 @@
                 <div class="text-center" style="margin-top: 5px;">
                     <button type="button" class="btn btn-upload btn-block" onclick="uploadImgA()"
                         style="max-width: 350px;">上傳圖片</button>
-                        
-                    <input class="fimg1" id="img1" type="file" accept="image/png,image/gif,image/jpeg" name="img1"
-                        title="">
-
+                    {{ form.image }}
+                    {% csrf_token %}
                     <label for="img1" id="labelImg1"></label>
                 </div>
-                {{ form.image }}
-                {% csrf_token %}
-                
-                <button class="btn btn-outline-success" type="submit">Submit</button>
+
+                <button class="btn btn-outline-success" type="submit">辨識</button>
             </div>
         </form>
     </div>
-    <div>
+    <div class="col-sm-9 col-lg-6">
+        <p style="margin-top:5px ;">辨識結果</p>
         {% if inference_img %}
-        <img src="{{inference_img}}" class="img-fluid" />
+        <img src="/static{{inference_img}}" class="img-fluid" width="auto" height="auto">
         {% else %}
         The inferenced image will be displayed here.
         {% endif %}
     </div>
-    <div class="站存圖片" style="background-color: yellowgreen;">
-        {% for photo in imagemodels %}    
-         {{ photo.image.url }}
-         <img src="/static/media/images/{{photo}}" class="img-fluid" />
-        {% endfor %}
-    </div>
-    
 </div>
 
 
-<!-- <script>
-    var filesizeLimit = 12 * 1024 * 1024
-    var resultObj = null
-    var inputID
-    var filesizeLimit = 12 * 1024 * 1024
 
-    $(document).ready(function () {
-        $('#img1').on('change', loadImgOnLable)
-        //getBrowserWidth()
-    });
-
-    // 上傳圖片
-    function uploadImgA() {
-        $("#img1").trigger("click");
-    }
-
-    function checkOnCancel() {
-        var fileNameStatA = $("#img1").get(0).files.length
-        // divResult 已隱藏
-        //var divResult = document.getElementById('divResult');
-        if (fileNameStatA == 0) {
-            //$('#fileNameA').text("")
-            $("#faceRectDiv").css({
-                'background-image': 'url("/static/images/faceMaster/click_upload.png")',
-                'width': '350px',
-                'height': '350px'
-            });
-            //divResult.style.display = "none";
-        }
-    }
-
-
-    function loadImgOnLable(e) {
-        $('#faceRectDiv').empty()
-        //var divResult = document.getElementById('divResult');
-        //divResult.style.display = "none";
-        resultObj = null
-        //$('#divResult').hide()
-        var faceRectDiv = $('#faceRectDiv')
-        inputID = e.currentTarget.id
-
-        var width = faceRectDiv[0].clientWidth
-
-        e.preventDefault()
-        e = e.originalEvent
-        var target = e.dataTransfer || e.target
-        var file = target && target.files && target.files[0]
-
-        var options = {
-            maxWidth: width,
-            canvas: true,
-            pixelRatio: window.devicePixelRatio,
-            downsamplingRatio: 0.5,
-            orientation: false
-        }
-
-        //check()
-        if (!file) {
-            checkOnCancel()
-            return
-        }
-
-        else if (file.size > filesizeLimit) {
-            var spanMsg = "<span id='fileErrMsg'></span>"
-            var msg = "您所選擇的檔案大小為 " + Math.floor(file.size / 1024) + "kb" + "已超過上傳上限 " + filesizeLimit / 1024 + "kb";
-            $("#divFileErr").append(spanMsg)
-            $("#fileErrMsg").text(msg)
-            $('#divFileErr').show()
-            return
-        }
-
-        //displayImage(file, options)
-        currentFile = file
-        //FaceMasterSearch()
-        // if (!loadImage(file, updateResults, options)) {
-        //     $('#divFileErr').text('上傳圖片失敗，請重新上傳')
-        // }
-
-    }
-
-
-    function updateResults(img, data) {
-        var fileName = currentFile.name
-        var href = img.src
-        var dataURLStart
-
-        if (!(img.src || img instanceof HTMLCanvasElement)) {
-            $('#divFileErr').text('上傳圖片失敗，請重新上傳')
-        }
-        else {
-            if (!href) {
-                href = img.toDataURL(currentFile.type + 'REMOVEME')
-                // Check if file type is supported for the dataURL export:
-                dataURLStart = 'data:' + currentFile.type
-                /*
-                if (href.slice(0, dataURLStart.length) !== dataURLStart) {
-                  fileName = fileName
-                }
-                */
-            }
-
-            if (inputID == "img1") {
-                //$('#file1Info').show()
-                //$('#fileNameA').text(fileName)
-            }
-
-        }
-        $('#divFileErr').hide()
-        $("#faceRectDiv").css("background-image", "url(" + href + ")");
-    }
-
-    // browser width change
-    function getBrowserWidth() {
-        window.addEventListener('resize', function () {
-            doneResizing()
-        });
-    }
-
-
-    function doneResizing() {
-        if (resultObj != null) {
-            updateFaceRect(resultObj)
-        }
-    }
-</script> -->
 
 
 
 <script>
     $(document).ready(function () {
-        $('#img1').on('change', loadImgOnLable)
+        $('#id_image').on('change', loadImgOnLable)
 
     });
 
     // 上傳圖片
     function uploadImgA() {
-        $("#img1").trigger("click");
+        $("#id_image").trigger("click");
 
     }
 
     function loadImgOnLable(e) {
         var readFile = new FileReader();
-        var mfile = $("#img1")[0].files[0];  //注意這裡必須時$("#myfile")[0]，document.getElementById('file')等價與$("#myfile")[0]
+        var mfile = $("#id_image")[0].files[0];  //注意這裡必須時$("#myfile")[0]，document.getElementById('file')等價與$("#myfile")[0]
         readFile.readAsDataURL(mfile);
         readFile.onload = function () {
             var img = $("#show");
