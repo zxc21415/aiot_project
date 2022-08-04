@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load crispy_forms_tags %}
 {% block title %}圖片辨識{% endblock %}
 {% block headmessage %}<h2></h2>{% endblock %}
 {% block content %}
@@ -68,7 +67,7 @@
 
         <p style="margin-top:5px ;">請選擇想辨識的檔案</p>
 
-        <form action="" enctype="multipart/form-data" id="imageUploadForm" method="post">
+        <form action="" enctype="multipart/form-data" method="POST" id="imageUploadForm">
 
             <div style="margin: 0 auto;">
                 <div class="uploadPreview" id="faceRectDiv">
@@ -78,13 +77,15 @@
                 <div class="text-center" style="margin-top: 5px;">
                     <button type="button" class="btn btn-upload btn-block" onclick="uploadImgA()"
                         style="max-width: 350px;">上傳圖片</button>
+                        
                     <input class="fimg1" id="img1" type="file" accept="image/png,image/gif,image/jpeg" name="img1"
                         title="">
 
                     <label for="img1" id="labelImg1"></label>
                 </div>
+                {{ form.image }}
                 {% csrf_token %}
-                {{ form|crispy }}
+                
                 <button class="btn btn-outline-success" type="submit">Submit</button>
             </div>
         </form>
@@ -96,7 +97,13 @@
         The inferenced image will be displayed here.
         {% endif %}
     </div>
-
+    <div class="站存圖片" style="background-color: yellowgreen;">
+        {% for photo in imagemodels %}    
+         {{ photo.image.url }}
+         <img src="/static/media/images/{{photo}}" class="img-fluid" />
+        {% endfor %}
+    </div>
+    
 </div>
 
 
@@ -246,9 +253,8 @@
         readFile.readAsDataURL(mfile);
         readFile.onload = function () {
             var img = $("#show");
+            img.attr("name", this.result);
             img.attr("src", this.result);
-            a = this.result.toString();
-            $("#faceRectDiv").css("background-image", "url(a)");
         }
     }
 </script>

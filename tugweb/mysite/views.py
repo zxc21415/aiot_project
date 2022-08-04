@@ -1,6 +1,6 @@
 
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 #import plotly.graph_objs as go
 
 import io
@@ -26,6 +26,19 @@ def introduce(request):
 
 def show(request):
     url = 'show'
+    imagemodels = ImageModel.objects.all()
+    
+    form = ImageUploadForm()
+    if request.method == "POST":
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/show')
+    context = {
+        'image': imagemodels,
+        'form': form
+    }
+    
     return render(request,"show.html",locals())
 
 def ship_sign(request):
@@ -54,7 +67,7 @@ def ship_sign(request):
 
 class UploadImage(CreateView):
     model = ImageModel
-    template_name = 'image/imagemodel_form.html'
+    template_name = 'show.html'
     fields = ["image"]
 
     def post(self, request, *args, **kwargs):
@@ -71,8 +84,8 @@ class UploadImage(CreateView):
             img = im.open(io.BytesIO(img_bytes))
 
             # Change this to the correct path
-            path_hubconfig = "absolute/path/to/yolov5_code"
-            path_weightfile = "absolute/path/to/yolov5s.pt"  # or any custom trained model
+            path_hubconfig = "C:/aiot_project/tugweb/yolov5_code"
+            path_weightfile = "C:/aiot_project/tugweb/yolov5s.pt"  # or any custom trained model
 
             model = torch.hub.load(path_hubconfig, 'custom',
                                path=path_weightfile, source='local')
@@ -81,7 +94,7 @@ class UploadImage(CreateView):
             results.render()
             for img in results.imgs:
                 img_base64 = im.fromarray(img)
-                img_base64.save("media/yolo_out/image0.jpg", format="JPEG")
+                img_base64.save("static/media/yolo_out/image0.jpg", format="JPEG")
 
             inference_img = "/media/yolo_out/image0.jpg"
 
@@ -90,11 +103,11 @@ class UploadImage(CreateView):
                 "form": form,
                 "inference_img": inference_img
             }
-            return render(request, 'image/imagemodel_form.html', context)
+            return render(request, 'show.html', context)
 
         else:
             form = ImageUploadForm()
         context = {
             "form": form
         }
-        return render(request, 'image/imagemodel_form.html', context)
+        return render(request, 'show.html', context)
