@@ -2,7 +2,8 @@
 
 from cProfile import label
 from django.shortcuts import render,redirect
-#import plotly.graph_objs as go
+from plotly.offline import plot
+import plotly.graph_objs as go
 
 import io
 from PIL import Image as im
@@ -23,8 +24,18 @@ def chart(request):
 
 def chart2(request):
     url = 'chart'
-    label_10=['0.0','0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0']
+    label_10=[float(i/20) for i in range(0,20)]
     Weights_20=Loss.objects.filter(weight_id=1).order_by('recall')
+    Weights_30=Loss.objects.filter(weight_id=2).order_by('recall')
+    Weights_40=Loss.objects.filter(weight_id=3).order_by('recall')
+    recall_20 = [d.recall for d in Weights_20]
+    precision_20 = [d.precision*10 for d in Weights_20]
+    recall_30 = [d.recall for d in Weights_30]
+    precision_30 = [d.precision for d in Weights_30]
+    recall_40 = [d.recall for d in Weights_40]
+    precision_40 = [d.precision for d in Weights_40]
+    plot_div = plot([go.Scatter(x=recall_20,y=precision_20,mode='lines'),go.Scatter(x=recall_30,y=precision_30,mode='lines'),go.Scatter(x=recall_40,y=precision_40)],output_type="div" )
+    plot_div2 = plot([go.Scatter(x=list(range(1,10)),y=precision_20,mode='lines')],output_type="div" )
     return render(request,"chart2.html",locals())
     
 

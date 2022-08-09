@@ -94,7 +94,7 @@ def process_batch(detections, labels, iouv):
 
 @torch.no_grad()
 def run(data,
-        weights='C:/aiot_project/tugweb/yolov5_code/best.pt',  # model.pt path(s)
+        weights='C:/aiot_project/tugweb/absolute/path/to/best.pt',  # model.pt path(s)
         batch_size=32,  # batch size
         imgsz=640,  # inference size (pixels)
         conf_thres=0.001,  # confidence threshold

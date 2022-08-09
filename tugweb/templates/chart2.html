@@ -15,9 +15,21 @@
     <input type="checkbox" value="5" name="Product" id="Product_5"> Purple 2 &nbsp;&nbsp;
     <input type="checkbox" value="6" name="Product" id="Product_6"> Orange 3 &nbsp;&nbsp;
   </form>
-  <!-- <div class="放放看資料">
-    {{Weights_20}}
-  </div> -->
+  <div class="放放看資料">
+    <div class="col">
+      {% autoescape off %}
+        {{plot_div2}}
+      {% endautoescape off %}
+    </div>
+  </div>
+  <div class="放放看資料2">
+    <div class="col">
+      {% autoescape off %}
+        {{plot_div}}
+      {% endautoescape off %}
+    </div>
+  </div>
+
 </div>
 
 <canvas id="myChart" width="400" height="150"></canvas>
@@ -30,7 +42,7 @@
 
   const labels = [
     {% for item in label_10 %}
-      '{{item}}',
+    '{{item}}',
     {% endfor %}
     ];
 
@@ -41,14 +53,20 @@
         label: 'My First dataset1',
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(255, 99, 132)',
-        data: [{% for item in Weights_20 %} {x:{{item.recall}},y:{{item.precision}}},{% endfor %}],
+        data: [{% for item in Weights_20 %} { x: {{ item.recall }}, y: {{ item.precision }}}, {% endfor %}],
       },
-      // {
-      //   label: 'My First dataset2',
-      //   backgroundColor: 'rgb(255, 79, 85)',
-      //   borderColor: 'rgb(92, 100, 156)',
-      //   data: [{x: 10, y: 20}, {x: 15, y: null}, {x: 20, y: 10}],
-      // },
+  {
+    label: 'My First dataset2',
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+          data: [{% for item in Weights_30 %} { x: { { item.recall } }, y: { { item.precision } } }, {% endfor %}],
+      },
+  {
+    label: 'My First dataset3',
+      backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        borderColor: 'rgba(255, 206, 86, 1)',
+          data: [{% for item in Weights_40 %} { x: { { item.recall } }, y: { { item.precision } } }, {% endfor %}],
+      },
 
     ]
     };
@@ -72,7 +90,7 @@
         //         stepSize: 0.1
         //     }
         // }
-    }
+      }
     }
   };
 </script>
