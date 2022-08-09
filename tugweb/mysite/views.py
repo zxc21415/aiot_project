@@ -21,10 +21,6 @@ def index(request):
 
 def chart(request):
     url = 'chart'
-    return render(request,"chart.html",locals())
-
-def chart2(request):
-    url = 'chart'
     
     Weights_20=Loss.objects.filter(weight_id=1).order_by('recall')
     Weights_30=Loss.objects.filter(weight_id=2).order_by('recall')
@@ -74,8 +70,7 @@ def chart2(request):
     plot_div2 = plot(fig2,output_type="div")
     plot_div3 = plot(fig3,output_type="div")
     plot_div4 = plot(fig4,output_type="div")
-    return render(request,"chart2.html",locals())
-    
+    return render(request,"chart.html",locals())    
 
 def introduce(request):
     url = 'introduce'
