@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}圖表{% endblock %}
+{% block headmessage %}<h2></h2>{% endblock %}
+{% block content %}
+
+<!-- 畫圖 -->
+
+<div class="row">
+  <form>
+    請勾選您想購買的項目<br>
+    <input type="checkbox" value="1" name="Product" id="Product_1"> Red 12 &nbsp;&nbsp;
+    <input type="checkbox" value="2" name="Product" id="Product_2"> Blue 19 &nbsp;&nbsp;
+    <input type="checkbox" value="3" name="Product" id="Product_3"> Yellow 3 &nbsp;&nbsp;
+    <input type="checkbox" value="4" name="Product" id="Product_4"> Green 5 &nbsp;&nbsp;
+    <input type="checkbox" value="5" name="Product" id="Product_5"> Purple 2 &nbsp;&nbsp;
+    <input type="checkbox" value="6" name="Product" id="Product_6"> Orange 3 &nbsp;&nbsp;
+  </form>
+  <!-- <div class="放放看資料">
+    {{Weights_20}}
+  </div> -->
+</div>
+
+<canvas id="myChart" width="400" height="150"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('myChart').getContext('2d');
+</script>
+<script>
+
+  const labels = [
+    {% for item in label_10 %}
+      '{{item}}',
+    {% endfor %}
+    ];
+
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'My First dataset1',
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(255, 99, 132)',
+        data: [{% for item in Weights_20 %} {x:{{item.recall}},y:{{item.precision}}},{% endfor %}],
+      },
+      // {
+      //   label: 'My First dataset2',
+      //   backgroundColor: 'rgb(255, 79, 85)',
+      //   borderColor: 'rgb(92, 100, 156)',
+      //   data: [{x: 10, y: 20}, {x: 15, y: null}, {x: 20, y: 10}],
+      // },
+
+    ]
+    };
+
+  const config = {
+    type: 'line',
+    data: data,
+    options: {
+      scales: {
+        // y: {
+        //     max: 1,
+        //     min: 0,
+        //     ticks: {
+        //         stepSize: 0.1
+        //     }
+        // },
+        // x: {
+        //     max: 1,
+        //     min: 0,
+        //     ticks: {
+        //         stepSize: 0.1
+        //     }
+        // }
+    }
+    }
+  };
+</script>
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
+
+
+
+{% endblock %}

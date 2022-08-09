@@ -1,5 +1,6 @@
 
 
+from cProfile import label
 from django.shortcuts import render,redirect
 #import plotly.graph_objs as go
 
@@ -8,7 +9,7 @@ from PIL import Image as im
 import torch
 
 from django.views.generic.edit import CreateView
-from mysite.models import ImageModel
+from mysite.models import ImageModel, Loss
 from mysite.forms import ImageUploadForm
 
 
@@ -19,6 +20,13 @@ def index(request):
 def chart(request):
     url = 'chart'
     return render(request,"chart.html",locals())
+
+def chart2(request):
+    url = 'chart'
+    label_10=['0.0','0.1','0.2','0.3','0.4','0.5','0.6','0.7','0.8','0.9','1.0']
+    Weights_20=Loss.objects.filter(weight_id=1).order_by('recall')
+    return render(request,"chart2.html",locals())
+    
 
 def introduce(request):
     url = 'introduce'
