@@ -4,6 +4,7 @@ from cProfile import label
 from django.shortcuts import render,redirect
 from plotly.offline import plot
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
 import io
 from PIL import Image as im
@@ -24,18 +25,55 @@ def chart(request):
 
 def chart2(request):
     url = 'chart'
-    label_10=[float(i/20) for i in range(0,20)]
+    
     Weights_20=Loss.objects.filter(weight_id=1).order_by('recall')
     Weights_30=Loss.objects.filter(weight_id=2).order_by('recall')
     Weights_40=Loss.objects.filter(weight_id=3).order_by('recall')
-    recall_20 = [d.recall for d in Weights_20]
-    precision_20 = [d.precision*10 for d in Weights_20]
-    recall_30 = [d.recall for d in Weights_30]
+    
+    precision_20 = [d.precision for d in Weights_20]
     precision_30 = [d.precision for d in Weights_30]
-    recall_40 = [d.recall for d in Weights_40]
     precision_40 = [d.precision for d in Weights_40]
-    plot_div = plot([go.Scatter(x=recall_20,y=precision_20,mode='lines'),go.Scatter(x=recall_30,y=precision_30,mode='lines'),go.Scatter(x=recall_40,y=precision_40)],output_type="div" )
-    plot_div2 = plot([go.Scatter(x=list(range(1,10)),y=precision_20,mode='lines')],output_type="div" )
+
+    recall_20 = [d.recall for d in Weights_20]
+    recall_30 = [d.recall for d in Weights_30]
+    recall_40 = [d.recall for d in Weights_40]
+
+    mAP05_20 = [d.mAP_05 for d in Weights_20]
+    mAP05_30 = [d.mAP_05 for d in Weights_30]
+    mAP05_40 = [d.mAP_05 for d in Weights_40]
+
+    mAP95_20 = [d.mAP_05_095 for d in Weights_20]
+    mAP95_30 = [d.mAP_05_095 for d in Weights_30]
+    mAP95_40 = [d.mAP_05_095 for d in Weights_40]
+
+    fig = make_subplots()
+    fig.add_trace(go.Scatter(x=list(range(1,len(Weights_20))),y=precision_20, name="權重20",mode='lines'),    )
+    fig.add_trace(go.Scatter(x=list(range(1,len(Weights_30))),y=precision_30, name="權重30",mode='lines'),    )
+    fig.add_trace(go.Scatter(x=list(range(1,len(Weights_40))),y=precision_40, name="權重40",mode='lines'),    )
+    fig.update_layout(title_text='metrics/precision')
+
+    fig2 = make_subplots()
+    fig2.add_trace(go.Scatter(x=list(range(1,len(Weights_20))),y=recall_20, name="權重20",mode='lines'),    )
+    fig2.add_trace(go.Scatter(x=list(range(1,len(Weights_30))),y=recall_30, name="權重30",mode='lines'),    )
+    fig2.add_trace(go.Scatter(x=list(range(1,len(Weights_40))),y=recall_40, name="權重40",mode='lines'),    )
+    fig2.update_layout(title_text='metrics/recall')
+
+    fig3 = make_subplots()
+    fig3.add_trace(go.Scatter(x=list(range(1,len(Weights_20))),y=mAP05_20, name="權重20",mode='lines'),    )
+    fig3.add_trace(go.Scatter(x=list(range(1,len(Weights_30))),y=mAP05_30, name="權重30",mode='lines'),    )
+    fig3.add_trace(go.Scatter(x=list(range(1,len(Weights_40))),y=mAP05_40, name="權重40",mode='lines'),    )
+    fig3.update_layout(title_text='metrics/mAP_0.5')
+
+    fig4 = make_subplots()
+    fig4.add_trace(go.Scatter(x=list(range(1,len(Weights_20))),y=mAP95_20, name="權重20",mode='lines'),    )
+    fig4.add_trace(go.Scatter(x=list(range(1,len(Weights_30))),y=mAP95_30, name="權重30",mode='lines'),    )
+    fig4.add_trace(go.Scatter(x=list(range(1,len(Weights_40))),y=mAP95_40, name="權重40",mode='lines'),    )
+    fig4.update_layout(title_text='metrics/mAP_0.5:0.95')
+
+    plot_div = plot(fig,output_type="div")
+    plot_div2 = plot(fig2,output_type="div")
+    plot_div3 = plot(fig3,output_type="div")
+    plot_div4 = plot(fig4,output_type="div")
     return render(request,"chart2.html",locals())
     
 
