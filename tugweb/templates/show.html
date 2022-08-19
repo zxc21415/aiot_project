@@ -112,11 +112,12 @@
 
     function loadImgOnLable(e) {
         var readFile = new FileReader();
-        var mfile = $("#id_image")[0].files[0];  //注意這裡必須時$("#myfile")[0]，document.getElementById('file')等價與$("#myfile")[0]
+        var mfile = $("#id_image")[0].files[0];  //注意這裡必須是$("#myfile")[0]，document.getElementById('file')等價與$("#myfile")[0]
+        //console.log(mfile);
         readFile.readAsDataURL(mfile);
         readFile.onload = function () {
             var img = $("#show");
-            img.attr("name", this.result);
+            //img.attr("name", this.result);
             img.attr("src", this.result);
         }
     }

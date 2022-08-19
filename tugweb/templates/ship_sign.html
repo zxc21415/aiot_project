@@ -48,8 +48,8 @@
                 為球型艏船舶的一種特有標誌，主要用以表明在其設計水線以下艏部前端有球鼻型突出體，並勘劃於船艏左右兩舷重載水線以上的艏部(bow)處。
                 <div class="row" style="margin-top:3%;">
                   {% for i in bow_list %}
-                  <div class="col-2 text-center" style="padding-left: 10% ;">
-                      <img src="/static/img/bowmark/{{i}}.png"  width="150" height="150">
+                  <div class="col-2 text-center">
+                      <img src="/static/img/bowmark/{{i}}.png" class="img-fluid" width="150" height="150">
                   </div>
                   {% endfor %}
   
@@ -89,7 +89,7 @@
                 <div class="row" style="margin-top:3%;">
                   {% for i in vessel_list %}
                   <div class="col-4 text-center">
-                      <img src="/static/img/vessel/{{i}}.jpg" >
+                      <img src="/static/img/vessel/{{i}}.jpg" class="img-fluid">
                   </div>
                   {% endfor %}
                 </div>

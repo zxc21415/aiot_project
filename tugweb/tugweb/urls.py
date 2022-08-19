@@ -19,6 +19,7 @@ from mysite import views
 
 
 urlpatterns = [
+    #(r'^icon.png$','django.views.generic.simple.redirect_to',{'url':'/static/images/icon.png'}),
     path('ship_sign/', views.ship_sign),
     path('show/', views.show),
     path('introduce/', views.introduce),

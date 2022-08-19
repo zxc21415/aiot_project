@@ -77,8 +77,6 @@ def introduce(request):
     return render(request,"introduce.html",locals())
 
 def show(request):
-    
-   
     model = ImageModel
     template_name = 'show.html'
     fields = ["image"]
@@ -147,53 +145,3 @@ def ship_sign(request):
         
     return render(request,"ship_sign.html",locals())
 
-
-
-
-
-class UploadImage(CreateView):
-    model = ImageModel
-    template_name = 'show.html'
-    fields = ["image"]
-
-    def post(self, request, *args, **kwargs):
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            img = request.FILES.get('image')
-            img_instance = ImageModel(
-                image=img
-            )
-            img_instance.save()
-
-            uploaded_img_qs = ImageModel.objects.filter().last()
-            img_bytes = uploaded_img_qs.image.read()
-            img = im.open(io.BytesIO(img_bytes))
-
-            # Change this to the correct path
-            path_hubconfig = "C:/aiot_project/tugweb/yolov5_code"
-            path_weightfile = "C:/aiot_project/tugweb/absolute/path/to/best.pt"  # or any custom trained model
-
-            model = torch.hub.load(path_hubconfig, 'custom',
-                               path=path_weightfile, source='local')
-
-            results = model(img, size=640)
-            results.render()
-            for img in results.imgs:
-                img_base64 = im.fromarray(img)
-                img_base64.save("static/media/yolo_out/image0.jpg", format="JPEG")
-
-            inference_img = "/media/yolo_out/image0.jpg"
-
-            form = ImageUploadForm()
-            context = {
-                "form": form,
-                "inference_img": inference_img
-            }
-            return render(request, 'show.html', context)
-
-        else:
-            form = ImageUploadForm()
-        context = {
-            "form": form
-        }
-        return render(request, 'show.html', context)
