@@ -1,0 +1,102 @@
+  /*introduce.html*/
+  .blue_block {
+      background-color: #2D6095;
+      color: white;
+  }
+
+  .white_block {
+      background-color: #F6F6F6;
+  }
+
+
+  /*chart.html*/
+  /* 40px */
+  .toTop-arrow {
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      border-radius: 33%;
+      opacity: 0.6;
+      background: #000;
+      cursor: pointer;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+  }
+
+
+  .toTop-arrow::before,
+  .toTop-arrow::after {
+      width: 18px;
+      height: 5px;
+      border-radius: 3px;
+      top: 17px;
+      background: #f90;
+      position: absolute;
+      content: "";
+  }
+
+  .toTop-arrow::before {
+      transform: rotate(-45deg) translate(0, -50%);
+      left: 0.5rem;
+  }
+
+  .toTop-arrow::after {
+      transform: rotate(45deg) translate(0, -50%);
+      right: 0.5rem;
+  }
+
+  .toTop-arrow:focus {
+      outline: none;
+  }
+
+  /*show.html*/
+  .uploadPreview {
+      position: relative;
+      width: 350px;
+      height: 300px;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border: 1px dashed #333333;
+      border-radius: 10px;
+  }
+
+  .btn-upload {
+      width: 350px;
+      height: 42px;
+      font-size: 22px;
+      line-height: unset;
+      border: none;
+      background-color: #2e2e2e;
+      color: #fff;
+      border-radius: 10px;
+  }
+
+  #id_image {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+  }
+
+  .btn-block {
+      display: block;
+  }
+
+  .btn-upload:hover {
+      background-color: #2e2e2e;
+      color: #fff;
+  }
+
+  .btn-upload:focus {
+      background-color: #2e2e2e;
+      color: #fff;
+  }

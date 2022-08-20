@@ -1,0 +1,152 @@
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 460px) {
+    body {
+        background-size: cover;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    .new_green {
+
+        left: 65% !important;
+    }
+}
+
+@keyframes go {
+    from {
+        background-color: white;
+        opacity: 0;
+    }
+
+    to {
+        background-color: white;
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        left: 20%;
+        top: 45%;
+        opacity: 0;
+    }
+
+    to {
+        left: 25%;
+        top: 50%;
+        opacity: 1;
+    }
+}
+
+.env {
+    position: absolute;
+    width: 350px;
+    height: 250px;
+    left: 24%;
+    top: 48%;
+
+    border-style: outset;
+    border-color: red;
+    animation-name: oxxo;
+    animation-duration: 3s;
+}
+
+.new_green {
+    position: relative;
+    left: 68%;
+    top: 75%;
+    width: 50px;
+    height: 50px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: lightgreen;
+}
+
+.green {
+    position: absolute;
+    left: 68%;
+    top: 75%;
+    width: 50px;
+    height: 50px;
+
+
+    border-style: solid;
+    border-width: 3px;
+    border-color: lightgreen;
+    animation-name: g2;
+    animation-duration: 3s;
+}
+
+@keyframes oxxo {
+
+    0% {
+        left: 7%;
+        top: 10%;
+        width: 150px;
+        height: 150px;
+    }
+
+    25% {
+        left: 81%;
+        top: 59%;
+        width: 150px;
+        height: 150px;
+    }
+
+    50% {
+        left: 32%;
+        top: 63%;
+        width: 150px;
+        height: 150px;
+    }
+
+    75% {
+        left: 86%;
+        top: 75%;
+        width: 150px;
+        height: 150px;
+    }
+
+    100% {
+        left: 24%;
+        top: 48%;
+        width: 350px;
+        height: 250px;
+    }
+}
+
+@keyframes g2 {
+
+    0% {
+        left: 72%;
+        top: 10%;
+
+    }
+
+    25% {
+        left: 28%;
+        top: 84%;
+
+    }
+
+    50% {
+        left: 85%;
+        top: 80%;
+
+    }
+
+    75% {
+        left: 13%;
+        top: 54%;
+
+    }
+
+    100% {
+        left: 37.8%;
+        top: 71.3%;
+
+
+    }
+}

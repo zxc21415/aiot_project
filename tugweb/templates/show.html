@@ -2,61 +2,6 @@
 {% block title %}圖片辨識{% endblock %}
 {% block headmessage %}<h2></h2>{% endblock %}
 {% block content %}
-
-<style type="text/css">
-    .uploadPreview {
-        position: relative;
-        width: 350px;
-        height: 300px;
-        display: inline-block;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        border: 1px dashed #333333;
-        border-radius: 10px;
-        /* background-image: url("/static/img/click_upload.png"); */
-    }
-
-    .btn-upload {
-        width: 350px;
-        height: 42px;
-        font-size: 22px;
-        line-height: unset;
-        border: none;
-        background-color: #2e2e2e;
-        color: #fff;
-        border-radius: 10px;
-    }
-
-    #id_image {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-    }
-
-    .btn-block {
-        display: block;
-        /* width: 100%; */
-    }
-
-    .btn-upload:hover {
-        background-color: #2e2e2e;
-        color: #fff;
-    }
-
-    .btn-upload:focus {
-        background-color: #2e2e2e;
-        color: #fff;
-    }
-</style>
-
-
-
 <div class="row">
     <div class="alert alert-primary" role="alert" style="font-size: 28px ;text-align: center;">
         <b>系統展示</b>
@@ -92,35 +37,8 @@
         {% endif %}
     </div>
 </div>
-
-
-
-
-
-
 <script>
-    $(document).ready(function () {
-        $('#id_image').on('change', loadImgOnLable)
-
-    });
-
-    // 上傳圖片
-    function uploadImgA() {
-        $("#id_image").trigger("click");
-
-    }
-
-    function loadImgOnLable(e) {
-        var readFile = new FileReader();
-        var mfile = $("#id_image")[0].files[0];  //注意這裡必須是$("#myfile")[0]，document.getElementById('file')等價與$("#myfile")[0]
-        //console.log(mfile);
-        readFile.readAsDataURL(mfile);
-        readFile.onload = function () {
-            var img = $("#show");
-            //img.attr("name", this.result);
-            img.attr("src", this.result);
-        }
-    }
+    
 </script>
 
 {% endblock %}
